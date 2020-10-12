@@ -34,4 +34,11 @@ $router->group(['prefix' => 'api/'], function ($router) {
     $router->put('product-groups/{id}/', 'ProductGroupController@update');
     $router->delete('product-groups/{id}/', 'ProductGroupController@destroy');
     $router->post('product-groups/searches','ProductGroupController@searches');
+
+    $router->post('suppliers/','SupplierController@store');
+    $router->get('suppliers/', 'SupplierController@index');
+    $router->get('suppliers/{id}/', 'SupplierController@show');
+    $router->put('suppliers/{id}/', 'SupplierController@update');
+    $router->delete('suppliers/{id}/', 'SupplierController@destroy');
+    $router->post('suppliers/searches','SupplierController@searches');
 });
