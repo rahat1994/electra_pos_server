@@ -41,4 +41,19 @@ $router->group(['prefix' => 'api/'], function ($router) {
     $router->put('suppliers/{id}/', 'SupplierController@update');
     $router->delete('suppliers/{id}/', 'SupplierController@destroy');
     $router->post('suppliers/searches','SupplierController@searches');
+
+
+    $router->post('products/','ProductController@store');
+    $router->get('products/', 'ProductController@index');
+    $router->get('products/{id}/', 'ProductController@show');
+    $router->put('products/{id}/', 'ProductController@update');
+    $router->delete('products/{id}/', 'ProductController@destroy');
+    $router->post('products/searches','ProductController@searches');
+
+    $router->post('purchases/','PurchaseController@store');
+    $router->get('purchases/', 'PurchaseController@index');
+    $router->get('purchases/{id}/', 'PurchaseController@show');
+    $router->put('purchases/{id}/', 'PurchaseController@update');
+    $router->delete('purchases/{id}/', 'PurchaseController@destroy');
+    $router->post('purchases/searches','PurchaseController@searches');
 });
