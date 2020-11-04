@@ -15,7 +15,12 @@ class Purchase extends Model
        'net_unit_cost',
        'paid_amount',
        'status',
-       'payment_status'
+       'payment_status',
+       'product_variety_count'
     ];
+
+    public function product_purchases(){
+        return $this->hasMany('App\Models\ProductPurchase');
+    }
 
 }

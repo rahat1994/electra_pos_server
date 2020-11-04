@@ -19,4 +19,9 @@ class Product extends Model
        'salePrice'
     ];
 
+    public function productGroup(){
+
+        return $this->belongsTo('App\Models\ProductGroup', 'productGroup');
+    }
+
 }

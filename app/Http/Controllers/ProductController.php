@@ -25,7 +25,12 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::all();
+        // dd(Product::find(1)->productGroup);
+        $products = Product::with('productGroup')->get();
+
+        // foreach ($products as $book) {
+        //     echo $book->productGroupObject;
+        // }
         return response()->json(['status' => 'success','result' => $products]);
     }
 

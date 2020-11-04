@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Purchase;
+use App\Models\ProductPurchase;
+use App\Models\Product;
 use Auth;
 
 class PurchaseController extends Controller
@@ -37,15 +39,56 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+
+
         $this->validate($request, [
             'supplier_id' => 'required',
-            'quantity' => 'required',
-            'total_cost' => 'required',
-            'paid_amount' => 'required'
+            'paid_amount' => 'required',
+            'purchased_products' => 'required|array|min:1'
         ]);
 
+        $purchase = $request->all();
+
+        // 1. create the purchase.
+        // 2. create the related purchase products.
+        // 3. Update Inventory.
+
+        // note: Implement Transactions
+
+        $purchase['product_variety_count'] = count($purchase['purchased_products']);
+        $stored_purchase = Purchase::create($purchase);
+        // dd($stored_purchase->id);
+        if ( $stored_purchase) {
+
+            foreach ($purchase['purchased_products'] as $key => $value) {
+
+                $product = Product::find($value['product_id']);
+                $total_cost = $value['total_cost'];
+
+                $product_purchase['purchase_id'] = $stored_purchase->id;
+                $product_purchase['product_id'] = $product->id;
+                $product_purchase['quantity'] = $value['quantity'];
+                $product_purchase['total_cost'] = $value['total_cost'];
+                $product_purchase['net_unit_cost'] = round($value['total_cost'] / $value['quantity'], 2);
+
+                ProductPurchase::create($product_purchase);
+            }
+
+
+        } else{
+
+        }
+
+
         //  quantity will have to be calculated.
+        //
+        foreach ($purchase['purchased_products'] as $key => $value) {
+
+            $product = Product::find($value['product_id']);
+            dd($product);
+
+
+        }
 
         $purchase = $request->all();
         $purchase['status'] = 'Recived';
